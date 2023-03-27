@@ -52,7 +52,7 @@ def main() -> None:
 
             writer = csv.writer(output_labels)
             writer.writerows(format_duplicates(duplicates))
-            writer.writerows(format_non_duplicates(duplicates, uniques))
+            # writer.writerows(format_non_duplicates(duplicates, uniques))
 
             del labels
 
