@@ -1,10 +1,10 @@
 import argparse
-import os
+import pathlib
 import unittest
 from io import StringIO
 from unittest.mock import patch
 
-from metrics.metrics import (
+from src.metrics import (
     ConfusionMatrix,
     Metrics,
     calculate_confusion_matrix,
@@ -19,19 +19,17 @@ class TestDuplicateDetectionMetrics(unittest.TestCase):
 
     def setUp(self):
         """Create two files with pairs of identifiers."""
-        self.true_positives_file = "data/test_true_positives.csv"
-        self.algorithm_positives_file = "data/test_algorithm_positives.csv"
+        self.true_positives_file: pathlib.Path = pathlib.Path("data") / "test_true_positives.csv"
+        self.algorithm_positives_file: pathlib.Path = pathlib.Path("data") / "test_algorithm_positives.csv"
 
-        with open(self.true_positives_file, "w") as f:
-            f.write("1,2\n2,3\n4,5\n")
+        self.true_positives_file.write_text("1,2\n2,3\n4,5")
 
-        with open(self.algorithm_positives_file, "w") as f:
-            f.write("1,2\n4,5\n6,7\n")
+        self.algorithm_positives_file.write_text("1,2\n4,5\n6,7")
 
     def tearDown(self):
         """Remove the files created in the setup."""
-        os.remove(self.true_positives_file)
-        os.remove(self.algorithm_positives_file)
+        self.true_positives_file.unlink()
+        self.algorithm_positives_file.unlink()
 
     def test_read_pairs_from_file(self):
         """Test that the pairs are read correctly from the file."""
