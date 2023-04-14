@@ -8,8 +8,6 @@ import itertools
 import random
 from typing import Iterator
 
-from ...format.default import format_duplicates, format_non_duplicates
-
 
 def main() -> None:
     """
@@ -52,7 +50,6 @@ def main() -> None:
 
             writer = csv.writer(output_labels)
             writer.writerows(format_duplicates(duplicates))
-            # writer.writerows(format_non_duplicates(duplicates, uniques))
 
             del labels
 
@@ -69,6 +66,28 @@ def main() -> None:
             writer.writeheader()
 
             writer.writerows(row for row in reader if row["uri"] in uris)
+
+
+def format_duplicates(duplicates: list[list[str]]) -> Iterator[list]:
+    """
+    Given a list of duplicates like the following:
+        [
+            [ A, B, C ],
+            [ D, E ]
+        ]
+
+    Yield lists to express each duplication:
+        ["+", A, B, 0]
+        ["+", A, C, 0]
+        ["+", B, C, 0]
+        ["+", D, E, 0]
+
+    Change this function and in order to change the format of the
+    output labels file.
+    """
+    for dups in duplicates:
+        for combination in itertools.combinations(dups, 2):
+            yield ["+", combination[0], combination[1], 0]
 
 
 def select_labels(
@@ -92,7 +111,7 @@ def select_labels(
         E <-> F
     """
     if randomize:
-        labels = random.sample(labels, k=len(labels))
+        random.shuffle(labels)
         uniques: list[str] = [
             random.choice(dups) for dups in labels[len(labels) // 2 :]
         ]
