@@ -74,7 +74,7 @@ class DedupeHandler:
             # each row has an uri and a lot of fields
             # create a data_attrs as dict. its key will be the uri and the value everything
 
-            data_attrs = {row["uri"]: row for row in reader}
+            data_attrs = {row["uri"]: self.normalize(row) for row in reader}
 
         data: dict = {
             "match": [(data_attrs[d1], data_attrs[d2]) for d1, d2 in duplicates],
@@ -83,3 +83,18 @@ class DedupeHandler:
 
         with open(filename, "w") as f:
             dedupe.write_training(data, f)
+
+    def normalize(self, row: dict) -> dict:
+        """
+        Normalize the data for dedupe.
+
+        Args:
+            row (dict): A record of the data.
+
+        Returns:
+            dict: The normalized data.
+        """
+        if row.get("coordinates"):
+            row["coordinates"] = f"({row['coordinates']})"
+
+        return row
