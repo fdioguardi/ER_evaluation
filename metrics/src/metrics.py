@@ -90,12 +90,14 @@ def parse_args() -> argparse.Namespace:
         description="Calculates precision, recall and f1-score given true and algorithm positives"
     )
     parser.add_argument(
-        "true_positives_file",
+        "-t",
+        "--true_positives_file",
         type=str,
         help="path to the file with the true positive matches",
     )
     parser.add_argument(
-        "algorithm_positives_file",
+        "-a",
+        "--algorithm_positives_file",
         type=str,
         help="path to the file with the algorithm positive matches",
     )

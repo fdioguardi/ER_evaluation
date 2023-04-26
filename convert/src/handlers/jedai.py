@@ -1,9 +1,6 @@
 import csv
-import os
 from collections.abc import Generator
 from typing import Iterable
-
-from .errors import FileExistsError, FileNotFoundError
 
 
 class JedaiHandler:
@@ -15,7 +12,7 @@ class JedaiHandler:
     tuple of duplicate IDs.
     """
 
-    def read(self, filename: str) -> Generator[tuple[str, str], None, None]:
+    def read_dups(self, filename: str) -> Generator[tuple[str, str], None, None]:
         """
         Read the duplicate IDs from the file.
 
@@ -24,31 +21,44 @@ class JedaiHandler:
 
         Yields:
             tuple[str, str]: The duplicate IDs.
-
-        Raises:
-            FileNotFoundError: If the file does not exist.
         """
-        if not os.path.exists(filename):
-            raise FileNotFoundError(filename)
-
         with open(filename, "r") as f:
             reader = csv.reader(f)
             yield from ((row[0], row[1]) for row in reader)
 
-    def write(self, filename: str, duplicates: Iterable[tuple[str, str]]):
+    def read_non_dups(self, _: str) -> Generator[tuple[str, str], None, None]:
+        """
+        Read the non-duplicate IDs from the file.
+        """
+        yield from ()
+
+    def write(
+        self,
+        filename: str,
+        datafile: str,
+        duplicates: Iterable[tuple[str, str]],
+        non_dups: Iterable[tuple[str, str]],
+    ):
         """
         Write the duplicate IDs to the file.
 
         Args:
             filename (str): The path to the file.
+            datafile (str): The path to the data file.
             duplicates (list[tuple[str, str]]): The duplicate IDs.
-
-        Raises:
-            FileExistsError: If the file already exists.
+            non_dups (list[tuple[str, str]]): The non-duplicate IDs.
         """
-        if os.path.exists(filename):
-            raise FileExistsError(filename)
-
         with open(filename, "w") as f:
             writer = csv.writer(f)
             writer.writerows(duplicates)
+
+
+
+    def extension(self) -> str:
+        """
+        Return the extension of the file format that the writer writes.
+
+        Returns:
+            The extension of the file format that the writer writes.
+        """
+        return ".jedai.csv"
