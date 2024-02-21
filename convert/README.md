@@ -1,5 +1,10 @@
 # convert.py :arrows_counterclockwise:
 
+![Python](https://img.shields.io/badge/Lenguaje-Python-blue.svg)
+![Licencia](https://img.shields.io/badge/Licencia-MIT-green.svg)
+
+[![README in spanish](https://img.shields.io/badge/lang-es-red.svg)](./README.es.md)
+
 Convert is a Python script that allows you to translate a file
 from one format to another using different reading and writing strategies.
 

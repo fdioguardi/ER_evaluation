@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Lenguaje-Python-blue.svg)
 ![Licencia](https://img.shields.io/badge/Licencia-MIT-green.svg)
 
-[![README en inglés](https://img.shields.io/badge/lang-es-red.svg)](./README.md)
+[![README en inglés](https://img.shields.io/badge/lang-en-red.svg)](./README.md)
 
 Convert es un script de Python que te permite traducir un archivo de
 un formato a otro utilizando diferentes estrategias de lectura y escritura.
