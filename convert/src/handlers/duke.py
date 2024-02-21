@@ -56,7 +56,7 @@ class DukeHandler:
             for non_dup in non_dups:
                 writer.writerow(["-", non_dup[0], non_dup[1], 0])
 
-
+    @property
     def extension(self) -> str:
         """
         Return the extension of the file format that the writer writes.

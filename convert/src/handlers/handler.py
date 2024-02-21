@@ -51,6 +51,7 @@ class Writer(Protocol):
         """
         ...
 
+    @property
     def extension(self) -> str:
         """
         Return the extension of the file format that the writer writes.

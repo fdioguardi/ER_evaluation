@@ -135,6 +135,7 @@ class DedupeHandler:
 
         return row
 
+    @property
     def extension(self) -> str:
         """
         Return the extension of the file format that the writer writes.
